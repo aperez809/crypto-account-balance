@@ -6,34 +6,6 @@ import sys
 import time
 
 
-initial_investment = 0#sys.argv[1]
-base = "https://pro.coinmarketcap.com"
-
-
-def single_coin_val(currency_dict, coin):
-
-    return round(float(requests.get
-                       (base + currency_dict[coin][1]).json()[0]["price_usd"]) * currency_dict[coin][0], 2)
-
-
-def account_values(currency_dict):
-    """Return market data about currently held coins"""
-
-    while True:
-        total_val = 0.0
-        for k,v in currency_dict.items():
-            coin_val = round(float(requests.get(base+v[1]).json()[0]["price_usd"]) * v[0],2)
-            total_val += coin_val
-            print("Notional Account Value of {}: ${}".format(k, coin_val))
-
-        print("\nProfit: ${} -> ${} ({}% change)\n\n\n\n\n".format(initial_investment, round(total_val, 2), round((total_val / initial_investment - 1) * 100, 2)))
-
-        time.sleep(10)
-
-def accountVales_DF(aDictOfCryptos):
-    pass
-
-
 class API:
 
     def __init__(self, api_key,
@@ -86,4 +58,6 @@ class API:
         for item in self.get_all_currency_data():
             if item['symbol'] == coin_symbol:
                 return item["quote"]["USD"]["price"]
+
+        print(f"{coin_symbol} not found in portfolio.")
 
