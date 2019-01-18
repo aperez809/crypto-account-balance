@@ -1,8 +1,6 @@
-#!/usr/bin/env
-
+#!/usr/bin/python3
 
 import json
-from pprint import pprint
 import requests
 import sys
 import time
@@ -38,10 +36,15 @@ def accountVales_DF(aDictOfCryptos):
 
 class API:
 
-    def __init__(self, api_key, base_url="https://pro-api.coinmarketcap.com", portfolio_dict=None):
+    def __init__(self, api_key,
+                 base_url="https://pro-api.coinmarketcap.com",
+                 portfolio_dict=None,
+                 initial_investment=0):
+
         self.api_key = {'X-CMC_PRO_API_KEY': api_key}
         self.base_url = base_url
         self.portfolio_dict = portfolio_dict
+        self.initial_investment = initial_investment
 
     def get_all_currency_data(self):
 
@@ -84,14 +87,3 @@ class API:
             if item['symbol'] == coin_symbol:
                 return item["quote"]["USD"]["price"]
 
-
-
-conn = API("72f1177c-ac6c-467a-be24-7c4a9be270de",
-           portfolio_dict={"ETH": 6.62523138,
-                  "XRP": 501.493699,
-                  "XRB": 44.58714468,
-                  "OMG": 56.9,
-                  "REQ": 661})
-
-#print(conn.portfolio_value())
-print(conn.single_coin_value("REQ"))
